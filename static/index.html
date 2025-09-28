@@ -14,7 +14,7 @@
 
             var gpumem = g3.gauge()
                 .metric('gpumem').unit('MB')
-                .fake(g3.forceSeries(0,8))
+                // .fake(g3.forceSeries(0,8))
                 .measure(d3.scaleLinear().domain([0,10]).range([-125,125]))
                 .append(
                     g3.gaugeFace(),
@@ -28,8 +28,8 @@
                     g3.indicatePointer().shape('sword'),
                 );
             var gpuutil = g3.gauge()
-                .metric('gpuutil').unit('pct')
-                .fake(g3.forceSeries(60, 100))
+                .metric('gpuutil').unit('s')
+                // .fake(g3.forceSeries(60, 100))
                 .measure(d3.scaleLinear().domain([0, 100]).range([-125, 125]))
                 .append(
                     g3.gaugeFace(),
@@ -47,7 +47,9 @@
                 .height(640)
                 .append(g3.put().x(150).y(150).append(gpumem))
                 .append(g3.put().x(450).y(150).append(gpuutil))
-            p('body');
+            // p('body');
+            p.interval(1000).url('/stream')('body');
+            // p.interval(500).url('/static/fake.json')('body');
         </script>
     </body>
 </html>

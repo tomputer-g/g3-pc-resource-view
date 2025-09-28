@@ -1,0 +1,10 @@
+{
+    "metrics":{
+        "gpumem": 8.2,
+        "gpuutil": 98
+    },
+    "units":{
+        "gpumem": "MB",
+        "gpuutil": "s"
+    }
+}
