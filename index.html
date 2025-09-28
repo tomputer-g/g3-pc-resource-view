@@ -1,8 +1,53 @@
 <html>
     <body>
+        <script src="https://d3js.org/d3.v7.min.js"></script>
         <script src="https://unpkg.com/@patricksurry/g3/dist/g3-contrib.min.js"></script>
+        
         <script>
-            g3.gallery.contrib('body')
+            // var panel = g3.panel()
+            //     .width(600).height(300)
+            //     .append(
+            //         g3.put().x(150).y(150).append(g3.contrib.clocks.simple()),
+            //         g3.put().x(450).y(150).append(g3.contrib.nav.heading.generic()),
+            //     );
+            // panel('body');
+
+            var gpumem = g3.gauge()
+                .metric('gpumem').unit('MB')
+                .fake(g3.forceSeries(0,8))
+                .measure(d3.scaleLinear().domain([0,10]).range([-125,125]))
+                .append(
+                    g3.gaugeFace(),
+                    g3.axisLine(),
+                    g3.axisLabels(),
+                    g3.axisTicks(), 
+                    // g3.axisSector([6,8]).size(5).class('g3-warning-fill'),
+                    g3.axisSector([8, 10]).size(5).class('g3-danger-fill'),
+                    g3.gaugeLabel("GPU MEM").size(12).y(-40),
+                    g3.gaugeLabel("GBs").size(20).y(40),
+                    g3.indicatePointer().shape('sword'),
+                );
+            var gpuutil = g3.gauge()
+                .metric('gpuutil').unit('pct')
+                .fake(g3.forceSeries(60, 100))
+                .measure(d3.scaleLinear().domain([0, 100]).range([-125, 125]))
+                .append(
+                    g3.gaugeFace(),
+                    g3.axisLine(),
+                    g3.axisLabels(),
+                    g3.axisTicks(),
+                    // g3.axisSector([60, 80]).size(5).class('g3-warning-fill'),
+                    g3.axisSector([80, 100]).size(5).class('g3-danger-fill'),
+                    g3.gaugeLabel("GPU UTIL").size(12).y(-40),
+                    g3.gaugeLabel("%").size(20).y(40),
+                    g3.indicatePointer().shape('sword'),
+                );
+            var p = g3.panel()
+                .width(640)
+                .height(640)
+                .append(g3.put().x(150).y(150).append(gpumem))
+                .append(g3.put().x(450).y(150).append(gpuutil))
+            p('body');
         </script>
     </body>
 </html>
